@@ -8,10 +8,12 @@ namespace ProjectToReadme.Arguments
 {
     public enum ArgumentType
     {
+        //project.json
         SourceFile,
+        //Markdown, Html or Text
+        OutputFormat,
+        //Text or File
         OutputType,
-        OutputFile,
-        None
-        
+        None  
     }
 }

@@ -28,25 +28,25 @@ namespace ProjectToReadme.Arguments
         {
             if (argsPair.Length == 2)
             {
-                Argument newArgument = new Argument();
+                ArgumentType newType = ArgumentType.None;
                 switch (argsPair[0])
                 {
                     case "-s":
                     case "-S":
                     {
-                        newArgument.Type = ArgumentType.SourceFile;
+                            newType = ArgumentType.SourceFile;
+                        break;
+                    }
+                    case "-f":
+                    case "-F":
+                    {
+                            newType = ArgumentType.OutputFormat;
                         break;
                     }
                     case "-t":
                     case "-T":
                     {
-                        newArgument.Type = ArgumentType.OutputType;
-                        break;
-                    }
-                    case "-o":
-                    case "-O":
-                    {
-                        newArgument.Type = ArgumentType.OutputFile;
+                            newType = ArgumentType.OutputType;
                         break;
                     }
                     default:
@@ -54,10 +54,38 @@ namespace ProjectToReadme.Arguments
                         throw new ArgumentsParserException("Not a valid command line argument: " + argsPair[0]);
                     }
                 }
-                newArgument.Value = argsPair[1];
+
+                Argument newArgument = new Argument();
+                if (ValidateArgumentValue(newType, argsPair[1]))
+                {
+                    newArgument.Value = argsPair[1];
+                    newArgument.Type = newType;
+                }
+                else
+                {
+                    throw new ArgumentsParserException("Not a valid argument value: " + argsPair[1] + " for type: " + newType);
+                }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                 return newArgument;
             }
             return null;
+        }
+
+        private bool ValidateArgumentValue(ArgumentType type, string value)
+        {
+            if (type == ArgumentType.OutputType)
+            {
+                if (value == "Text" || value == "File")
+                    return true;
+            }
+
+            if (type == ArgumentType.OutputFormat)
+            {
+                if (value == "Markdown" || value == "Html" || value == "Text")
+                    return true;
+            }
+            if (type == ArgumentType.SourceFile)
+                return true;
+            return false;
         }
     }
 }
