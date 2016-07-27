@@ -62,23 +62,42 @@ namespace ProjectToReadme
                     Environment.Exit(0);
                 }
             }
+        }
 
-            Console.ReadLine();
+        public static void Exit(string message)
+        {
+            Console.WriteLine(message);
+            Console.WriteLine("Will exit in 5 seconds");
+            Stopwatch watch = Stopwatch.StartNew();
+            while (true)
+            {
+                if (watch.ElapsedMilliseconds == 5000)
+                {
+                    Environment.Exit(0);
+                }
+            }
         }
 
         public static Project ParseProject()
         {
             string json = String.Empty;
-            using (StreamReader rdr = new StreamReader(arguments[ArgumentType.SourceFile].Value))
+            string file = arguments[ArgumentType.SourceFile].Value;
+            if (File.Exists(file))
             {
-                string line = String.Empty;
-                while ((line = rdr.ReadLine()) != null)
+                using (StreamReader rdr = new StreamReader(file))
                 {
-                    json += line;
-                }
+                    string line = String.Empty;
+                    while ((line = rdr.ReadLine()) != null)
+                    {
+                        json += line;
+                    }
+                    Console.WriteLine(json);
 
-                return JsonConvert.DeserializeObject<Project>(json);
+                    return JsonConvert.DeserializeObject<Project>(json);
+                }
             }
+            Exit("No file called " + file + " found.");
+            return null;
         }
 
         public static bool GenerateReadme()
@@ -116,15 +135,12 @@ namespace ProjectToReadme
                 Console.WriteLine(output);
                 return true;
             }
-            else
+
+            using (StreamWriter wrtr = new StreamWriter(outputFile))
             {
-                using (StreamWriter wrtr = new StreamWriter(outputFile))
-                {
-                    wrtr.WriteLine(output);
-                    return true;
-                }
+                wrtr.WriteLine(output);
+                return true;
             }
-            return false;
         }
 
         private static string GenerateMarkdownReadme()

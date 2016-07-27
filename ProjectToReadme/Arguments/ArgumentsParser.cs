@@ -15,6 +15,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,8 +36,23 @@ namespace ProjectToReadme.Arguments
             for (int index = 0; index < _cmdArgs.Length; index += 2)
             {
                 arguments.Add(GetArgument(new string[] {_cmdArgs[index], _cmdArgs[index + 1]}));
+                Console.WriteLine(_cmdArgs[index + 1]);
             }
             return arguments;
+        }
+
+        private static void Exit(string message)
+        {
+            Console.WriteLine(message);
+            Console.WriteLine("Will exit in 5 seconds");
+            Stopwatch watch = Stopwatch.StartNew();
+            while (true)
+            {
+                if (watch.ElapsedMilliseconds == 5000)
+                {
+                    Environment.Exit(0);
+                }
+            }
         }
 
         private Argument GetArgument(string[] argsPair)
@@ -66,7 +82,8 @@ namespace ProjectToReadme.Arguments
                     }
                     default:
                     {
-                        throw new ArgumentsParserException("Not a valid command line argument: " + argsPair[0]);
+                        Exit("Not a valid command line argument: " + argsPair[0]);
+                        break;
                     }
                 }
 
@@ -78,7 +95,7 @@ namespace ProjectToReadme.Arguments
                 }
                 else
                 {
-                    throw new ArgumentsParserException("Not a valid argument value: " + argsPair[1] + " for type: " + newType);
+                    Exit("Not a valid argument value: " + argsPair[1] + " for type: " + newType);
                 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                 return newArgument;
             }
