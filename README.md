@@ -14,5 +14,7 @@ So far, there are 3 supported and (all) required options to be supplied for the 
 
 ## Authors
 [Daniel Zikmund](http://zikmund.me/)
+## Libraries used
+My special thanks go to [Newtonsoft](http://www.newtonsoft.com/json) for providing the great [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/9.0.1) library.
 ##License
 License is included in the [LICENSE.txt](https://github.com/DZetko/ProjectToReadme/blob/master/LICENSE.txt) file of this project.
