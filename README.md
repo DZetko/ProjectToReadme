@@ -1,6 +1,6 @@
 # ProjectToReadme
 
-This is a simple command-line tool, that enables C# developers to turn their project.json files into a beautifully looking Markdown, HTML or plain text file.
+This is a simple command-line tool, that enables C# developers to turn their project.json file into a beautifully looking Markdown, HTML or plain text file.
 
 ## Usage
 Open up Windows Command Prompt (**Win+R** and enter **cmd.exe**) or Powershell. Locate the **ProjectToReadme.exe**'s folder on your computer (the executable file's name is due to change in future releases).
